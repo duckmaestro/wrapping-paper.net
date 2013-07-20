@@ -32,7 +32,7 @@ Usage
  1. Ensure that *Awesomium.NET* is added to your build.
  2. Ensure *Paper.js* is included and functioning in your HTML file(s) within Awesomium.
  3. Add *Wrapping-Paper.NET* to your build.
- 4. Include [wrapping-paper.js](https://github.com/duckmaestro/wrapping-paper.net/blob/master/source/Wrapping-Paper.NET/wrapping-paper.js) 
+ 4. Include [wrapping-paper.js](https://github.com/duckmaestro/wrapping-paper.net/blob/master/source/wrapping-paper.js) 
     as a source script in your HTML file(s).
  5. Use *Wrapper-Paper.NET* by invoking `PaperJS.PaperScope.Get(yourWebView)`.
     This returns a [`PaperScope`](http://paperjs.org/reference/paperscope/), ready for use.
