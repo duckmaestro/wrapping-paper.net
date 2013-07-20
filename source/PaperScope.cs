@@ -38,6 +38,11 @@ namespace PaperJS
     /// </remarks>
     public class PaperScope : BaseWrapper
     {
+        public static PaperScope Get(IWebView webView)
+        {
+            return BaseWrapper.Get(webView);
+        }
+
         public PaperScope(JSObject jsPaperScope)
             : base(jsPaperScope)
         {
@@ -90,6 +95,13 @@ namespace PaperJS
             }
         }
 
-
+        /// <summary>
+        /// Sets up an empty project for us. If a canvas is provided, it also 
+        /// creates a View for it, both linked to this scope.
+        /// </summary>
+        public void Setup(JSObject canvas)
+        {
+            _jsObject.Invoke("setup", canvas);
+        }
     }
 }

@@ -34,6 +34,6 @@ Usage
  3. Add *Wrapping-Paper.NET* to your build.
  4. Include [wrapping-paper.js](https://github.com/duckmaestro/wrapping-paper.net/blob/master/source/Wrapping-Paper.NET/wrapping-paper.js) 
     as a source script in your HTML file(s).
- 5. Initialize *Wrapper-Paper.NET* by invoking `PaperJS.BaseWrapper.Initialize(yourWebView)`.
+ 5. Use *Wrapper-Paper.NET* by invoking `PaperJS.PaperScope.Get(yourWebView)`.
     This returns a [`PaperScope`](http://paperjs.org/reference/paperscope/), ready for use.
  6. Instantiate other objects in the `PaperJS` namespace as needed.

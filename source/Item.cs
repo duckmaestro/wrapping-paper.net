@@ -9,6 +9,8 @@
 
 using Awesomium.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PaperJS
 {
@@ -89,8 +91,8 @@ namespace PaperJS
         }
 
         /// <summary>
-        /// Specifies whether the item is visible. When set to 
-        /// false, the item won't be drawn.
+        /// Specifies whether the item is visible. When set to false, the item 
+        /// won't be drawn.
         /// </summary>
         public bool Visible
         {
@@ -130,9 +132,9 @@ namespace PaperJS
         }
 
         /// <summary>
-        /// Specifies whether the item defines a clip mask. This can only be set 
-        /// on paths, compound paths, and text frame objects, and only if the 
-        /// item is already contained within a clipping group.
+        /// Specifies whether the item defines a clip mask. This can only be 
+        /// set on paths, compound paths, and text frame objects, and only if 
+        /// the item is already contained within a clipping group.
         /// </summary>
         public bool ClipMask
         {
@@ -216,6 +218,79 @@ namespace PaperJS
         }
 
         /// <summary>
+        /// The project that this item belongs to.
+        /// Read only.
+        /// </summary>
+        public Project Project
+        {
+            get
+            {
+                JSObject jsProject = _jsObject["project"];
+                return jsProject == null ? null : new Project(jsProject);
+            }
+        }
+
+        /// <summary>
+        /// The layer that this item is contained within.
+        /// Read only.
+        /// </summary>
+        public Layer Layer
+        {
+            get
+            {
+                JSObject jsLayer = _jsObject["layer"];
+                return jsLayer == null ? null : new Layer(jsLayer);
+            }
+        }
+
+        /// <summary>
+        /// The item that this item is contained within.
+        /// </summary>
+        public Item Parent
+        {
+            get
+            {
+                JSObject jsParent = _jsObject["parent"];
+                return jsParent == null ? null : new Item(jsParent);
+            }
+            set
+            {
+                _jsObject["parent"] = value;
+            }
+        }
+        
+        /// <summary>
+        /// The children items contained within this item. Items that define a 
+        /// name can also be accessed by name.
+        /// Please note: The children array should not be modified directly 
+        /// using array functions. To remove single items from the children 
+        /// list, use item.remove(), to remove all items from the children 
+        /// list, use item.removeChildren(). To add items to the children 
+        /// list, use item.addChild(item) or item.insertChild(index, item).
+        /// </summary>
+        public IEnumerable<Item> Children
+        {
+            get
+            {
+                JSValue[] jsChildren = (JSValue[])_jsObject["children"];
+                return jsChildren.Cast<JSObject>().Select(c => new Item(c));
+            }
+        }
+
+        /// <summary>
+        /// The index of this item within the list of its parent's children.
+        /// Read only.
+        /// </summary>
+        public int Index
+        {
+            get
+            {
+                JSValue jsIndex = _jsObject["index"];
+                return (int)jsIndex;
+            }
+        }
+
+        /// <summary>
         /// The color of the stroke.
         /// </summary>
         public Color StrokeColor
@@ -264,6 +339,104 @@ namespace PaperJS
         }
 
         /// <summary>
+        /// The color the item is highlighted with when selected. If the item 
+        /// does not specify its own color, the color defined by its layer is 
+        /// used instead.
+        /// </summary>
+        public Color SelectedColor
+        {
+            get
+            {
+                JSObject jsSelectedColor = _jsObject["selectedColor"];
+                return jsSelectedColor == null ? null : new Color(jsSelectedColor);
+            }
+            set
+            {
+                _jsObject["selectedColor"] = value;
+            }
+        }
+
+        /// <summary>
+        /// Item level handler function to be called on each frame of an 
+        /// animation.
+        /// The function receives an event object which contains information 
+        /// about the frame event:
+        /// event.count: the number of times the frame event was fired.
+        /// event.time: the total amount of time passed since the first frame 
+        /// event in seconds.
+        /// event.delta: the time passed in seconds since the last frame event.
+        /// </summary>
+        public Action<FrameEvent> OnFrame
+        {
+            set
+            {
+                if (value != null)
+                {
+                    _jsObject.Bind("OnFrame", false, delegate(object sender, JavascriptMethodEventArgs args)
+                    {
+                        JSObject jsArg0 = args.Arguments[0];
+                        FrameEvent frameEvent = new FrameEvent(jsArg0);
+                        value(frameEvent);
+                    });
+                }
+                else
+                {
+                    _jsObject.RemoveProperty("OnFrame");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The function to be called when the mouse button is pushed down on 
+        /// the item. The function receives a MouseEvent object which contains 
+        /// information about the mouse event.
+        /// </summary>
+        public Action<MouseEvent> OnMouseDown
+        {
+            set
+            {
+                if (value != null)
+                {
+                    _jsObject.Bind("onMouseDown", false, delegate(object sender, JavascriptMethodEventArgs args)
+                    {
+                        JSObject jsArg0 = args.Arguments[0];
+                        MouseEvent mouseEvent = new MouseEvent(jsArg0);
+                        value(mouseEvent);
+                    });
+                }
+                else
+                {
+                    _jsObject.RemoveProperty("onMouseDown");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The function to be called when the mouse button is released over 
+        /// the item. The function receives a MouseEvent object which contains 
+        /// information about the mouse event.
+        /// </summary>
+        public Action<MouseEvent> OnMouseUp
+        {
+            set
+            {
+                if (value != null)
+                {
+                    _jsObject.Bind("onMouseUp", false, delegate(object sender, JavascriptMethodEventArgs args)
+                    {
+                        JSObject jsArg0 = args.Arguments[0];
+                        MouseEvent mouseEvent = new MouseEvent(jsArg0);
+                        value(mouseEvent);
+                    });
+                }
+                else
+                {
+                    _jsObject.RemoveProperty("onMouseUp");
+                }
+            }
+        }
+
+        /// <summary>
         /// The function to be called when the mouse clicks on the item. The 
         /// function receives a MouseEvent object which contains information 
         /// about the mouse event.
@@ -272,19 +445,43 @@ namespace PaperJS
         {
             set
             {
-                var del = value;
-                if (del != null)
+                if (value != null)
                 {
                     _jsObject.Bind("onClick", false, delegate(object sender, JavascriptMethodEventArgs args)
                     {
                         JSObject jsArg0 = args.Arguments[0];
                         MouseEvent mouseEvent = new MouseEvent(jsArg0);
-                        del(mouseEvent);
+                        value(mouseEvent);
                     });
                 }
                 else
                 {
                     _jsObject.RemoveProperty("onClick");
+                }
+            }
+        }
+
+        /// <summary>
+        /// The function to be called repeatedly when the mouse moves on top 
+        /// of the item. The function receives a MouseEvent object which 
+        /// contains information about the mouse event.
+        /// </summary>
+        public Action<MouseEvent> OnMouseMove
+        {
+            set
+            {
+                if (value != null)
+                {
+                    _jsObject.Bind("onMouseMove", false, delegate(object sender, JavascriptMethodEventArgs args)
+                    {
+                        JSObject jsArg0 = args.Arguments[0];
+                        MouseEvent mouseEvent = new MouseEvent(jsArg0);
+                        value(mouseEvent);
+                    });
+                }
+                else
+                {
+                    _jsObject.RemoveProperty("onMouseMove");
                 }
             }
         }

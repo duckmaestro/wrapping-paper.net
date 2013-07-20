@@ -21,7 +21,7 @@ namespace PaperJS
         private static IWebView _webView;
         private static readonly string WrappingPaperObjectNameJS = "wrappingpaper";
 
-        public static PaperScope Initialize(IWebView webView)
+        protected static PaperScope Get(IWebView webView)
         {
             if (webView == null)
             {
