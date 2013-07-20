@@ -3,9 +3,10 @@ Wrapping-Paper.NET
 
 *Wrapping-Paper.NET* is a .NET-based wrapper for the popular HTML5 graphics library ***Paper.js***. 
 
-The purpose of this library is to enable Awesomium-based native applications to utilize Paper.js, 
-effectively bringing Paper.js into the .NET world. Further, applications which wish to have both native 
-and web releases can use this wrapper in combination with other tools such as JSIL to author code that
+The purpose of this library is to enable Awesomium-based native applications to utilize *Paper.js*, 
+effectively bringing it into the .NET world. Further, applications which wish to have both native 
+and web releases can use this wrapper in combination with other tools such as [JSIL](https://github.com/sq/JSIL)
+to author code that
 (in theory) is deployable to both worlds without an unreasonable amount of effort.
 
 Requirements
@@ -18,6 +19,12 @@ Requirements
 
  * [Paper.js](http://paperjs.org/)
   * Tested on version 0.9.8
+
+Project Status
+--------------
+Early work-in-progress. Usable, but only about 10% 
+of Paper.js is wrapped currently. Pull requests
+welcome.
 
 Usage
 -----
