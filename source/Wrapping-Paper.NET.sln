@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapping-Paper.NET", "Wrapping-Paper.NET.csproj", "{1FD6B172-8C8D-42DA-986E-20EF43008782}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wrapping-Paper.NET", "Wrapping-Paper.NET\Wrapping-Paper.NET.csproj", "{1FD6B172-8C8D-42DA-986E-20EF43008782}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
