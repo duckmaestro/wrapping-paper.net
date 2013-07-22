@@ -174,7 +174,14 @@ namespace PaperJS
 
         public static implicit operator JSValue(BaseWrapper item)
         {
-            return item._jsObject;
+            if (item == null)
+            {
+                return JSValue.Null;
+            }
+            else
+            {
+                return item._jsObject;
+            }
         }
 
         public static implicit operator JSObject(BaseWrapper item)

@@ -51,12 +51,15 @@
     <Compile Include="MouseEvent.cs" />
     <Compile Include="Path.cs" />
     <Compile Include="Point.cs" />
+    <Compile Include="PointText.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="PaperScope.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shape.cs" />
     <Compile Include="Size.cs" />
+    <Compile Include="Style.cs" />
+    <Compile Include="TextItem.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>
   <ItemGroup>

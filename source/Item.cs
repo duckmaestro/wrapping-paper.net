@@ -78,15 +78,16 @@ namespace PaperJS
         /// <summary>
         /// The path style of the item.
         /// </summary>
-        public object Style
+        public Style Style
         {
             get
             {
-                throw new NotImplementedException();
+                JSObject jsStyle = _jsObject["style"];
+                return jsStyle == null ? null : new Style(jsStyle);
             }
             set
             {
-                throw new NotImplementedException();
+                _jsObject["style"] = value;
             }
         }
 

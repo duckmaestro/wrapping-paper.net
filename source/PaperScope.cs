@@ -38,7 +38,7 @@ namespace PaperJS
     /// </remarks>
     public class PaperScope : BaseWrapper
     {
-        public static PaperScope Get(IWebView webView)
+        public static new PaperScope Get(IWebView webView)
         {
             return BaseWrapper.Get(webView);
         }
