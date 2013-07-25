@@ -175,12 +175,14 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsPosition = _jsObject["position"];
-                return jsPosition == null ? null : new Point(jsPosition);
+                // HACK: Until invoking getters/setters from Awesomium is fixed.
+                return new Point(this.Matrix.TranslateX, this.Matrix.TranslateY);
             }
             set
             {
-                _jsObject["position"] = value;
+                // HACK: Until invoking getters/setters from Awesomium is fixed.
+                this.Matrix.TranslateX = value.X;
+                this.Matrix.TranslateY = value.Y;
             }
         }
 
@@ -274,7 +276,7 @@ namespace PaperJS
             get
             {
                 JSValue[] jsChildren = (JSValue[])_jsObject["children"];
-                return jsChildren.Cast<JSObject>().Select(c => new Item(c));
+                return jsChildren.Select(c => (JSObject)c).Select(c => new Item(c));
             }
         }
 
@@ -524,5 +526,15 @@ namespace PaperJS
         {
             return _jsObject.Invoke("isChild", item);
         }
+
+        /// <summary>
+        /// Translates (moves) the item by the given offset point.
+        /// </summary>
+        public void Translate(Point delta)
+        {
+            _jsObject.Invoke("translate", delta);
+        }
     }
 }
+
+
