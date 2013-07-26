@@ -28,6 +28,7 @@ var wrappingpaper = {
             var obj = Object.create(constructor.prototype);
             constructor.apply(obj, args);
             this.outbox = obj;
+            //this.retained.push(obj);
             return true;
         }
         catch (exc) {
@@ -48,11 +49,32 @@ var wrappingpaper = {
                
             var obj = method.apply(null, args);
             this.outbox = obj;
+            //this.retained.push(obj);
             return true;
         }
         catch (exc) {
             this.log(exc);
             return exc.toString();
         }
-    }
+    },
+    property: function (target, name, value) {
+        this.outbox = null;
+        try
+        {
+            if (typeof value === "undefined") {
+                var obj = target[name];
+                this.outbox = obj;
+                //this.retained.push(obj);
+                return true;
+            }
+            else {
+                target[name] = value;
+                return true;
+            }
+        }
+        catch (exc) {
+            return exc.stack.toString();
+        }
+    },
+    retained: []
 };

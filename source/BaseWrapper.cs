@@ -39,6 +39,64 @@ namespace PaperJS
             return paper;
         }
 
+        protected void Property(string name, JSValue value)
+        {
+            JSObject target = this;
+            JSObject jsClassFactory = _webView.ExecuteJavascriptWithResult(WrappingPaperObjectNameJS);
+            JSValue message = jsClassFactory.Invoke("property", target, name, value);
+
+            if (message.IsBoolean)
+            {
+                bool success = message;
+                if (success)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new Exception("Unknown error creating object.");
+                }
+            }
+            else if (message.IsString)
+            {
+                string error = message;
+                throw new Exception(error);
+            }
+            else
+            {
+                throw new Exception("Unknown error creating object.");
+            }
+        }
+
+        protected JSValue Property(string name)
+        {
+            JSObject target = this;
+            JSObject jsClassFactory = _webView.ExecuteJavascriptWithResult(WrappingPaperObjectNameJS);
+            JSValue message = jsClassFactory.Invoke("property", target, name);
+
+            if (message.IsBoolean)
+            {
+                bool success = message;
+                if (success)
+                {
+                    return jsClassFactory["outbox"];
+                }
+                else
+                {
+                    throw new Exception("Unknown error creating object.");
+                }
+            }
+            else if (message.IsString)
+            {
+                string error = message;
+                throw new Exception(error);
+            }
+            else
+            {
+                throw new Exception("Unknown error creating object.");
+            }
+        }
+
         public static JSObject CreateObjectByTypeName(string typeName, object[] arguments)
         {
             if (_webView == null)

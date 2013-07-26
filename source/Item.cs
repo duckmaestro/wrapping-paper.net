@@ -40,7 +40,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsId = _jsObject["id"];
+                JSValue jsId = Property("id");
                 return (int)jsId;
             }
         }
@@ -53,7 +53,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsType = _jsObject["type"];
+                JSValue jsType = Property("type");
                 return jsType.IsString ? (string)jsType : null;
             }
         }
@@ -66,12 +66,12 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsName = _jsObject["name"];
+                JSValue jsName = Property("name"); ;
                 return jsName.IsString ? (string)jsName : null;
             }
             set
             {
-                _jsObject["name"] = value;
+                Property("name", value);
             }
         }
 
@@ -82,12 +82,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsStyle = _jsObject["style"];
+                JSObject jsStyle = Property("style");
                 return jsStyle == null ? null : new Style(jsStyle);
             }
             set
             {
-                _jsObject["style"] = value;
+                Property("style", value);
             }
         }
 
@@ -99,12 +99,12 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsVisible = _jsObject["visible"];
+                JSValue jsVisible = Property("visible");
                 return (bool)jsVisible;
             }
             set
             {
-                _jsObject["visible"] = value;
+                Property("visible", value);
             }
         }
 
@@ -123,12 +123,12 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsSelected = _jsObject["selected"];
+                JSValue jsSelected = Property("selected");
                 return (bool)jsSelected;
             }
             set
             {
-                _jsObject["selected"] = value;
+                Property("selected", value);
             }
         }
 
@@ -141,12 +141,12 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsClipMask = _jsObject["clipMask"];
+                JSValue jsClipMask = Property("clipMask");
                 return (bool)jsClipMask;
             }
             set
             {
-                _jsObject["clipMask"] = value;
+                Property("clipMask", value);
             }
         }
 
@@ -158,12 +158,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsData = _jsObject["data"];
+                JSObject jsData = Property("data");
                 return jsData;
             }
             set
             {
-                _jsObject["data"] = value;
+                Property("data", value);
             }
         }
 
@@ -175,14 +175,12 @@ namespace PaperJS
         {
             get
             {
-                // HACK: Until invoking getters/setters from Awesomium is fixed.
-                return new Point(this.Matrix.TranslateX, this.Matrix.TranslateY);
+                JSObject jsPosition = Property("position");
+                return jsPosition == null ? null : new Point(jsPosition);
             }
             set
             {
-                // HACK: Until invoking getters/setters from Awesomium is fixed.
-                this.Matrix.TranslateX = value.X;
-                this.Matrix.TranslateY = value.Y;
+                Property("position", value);
             }
         }
 
@@ -194,12 +192,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsMatrix = _jsObject["matrix"];
+                JSObject jsMatrix = Property("matrix");
                 return jsMatrix == null ? null : new Matrix(jsMatrix);
             }
             set
             {
-                _jsObject["matrix"] = value;
+                Property("matrix", value);
             }
         }
 
@@ -211,12 +209,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsBounds = _jsObject["bounds"];
+                JSObject jsBounds = Property("bounds");
                 return jsBounds == null ? null : new Rectangle(jsBounds);
             }
             set
             {
-                _jsObject["bounds"] = value;
+                Property("bounds", value);
             }
         }
 
@@ -228,7 +226,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsProject = _jsObject["project"];
+                JSObject jsProject = Property("project");
                 return jsProject == null ? null : new Project(jsProject);
             }
         }
@@ -241,7 +239,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsLayer = _jsObject["layer"];
+                JSObject jsLayer = Property("layer");
                 return jsLayer == null ? null : new Layer(jsLayer);
             }
         }
@@ -253,12 +251,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsParent = _jsObject["parent"];
+                JSObject jsParent = Property("parent");
                 return jsParent == null ? null : new Item(jsParent);
             }
             set
             {
-                _jsObject["parent"] = value;
+                Property("parent", value);
             }
         }
         
@@ -275,7 +273,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue[] jsChildren = (JSValue[])_jsObject["children"];
+                JSValue[] jsChildren = (JSValue[])Property("children");
                 return jsChildren.Select(c => (JSObject)c).Select(c => new Item(c));
             }
         }
@@ -288,7 +286,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsIndex = _jsObject["index"];
+                JSValue jsIndex = Property("index");
                 return (int)jsIndex;
             }
         }
@@ -300,12 +298,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsStrokeColor = _jsObject["strokeColor"];
+                JSObject jsStrokeColor = Property("strokeColor");
                 return jsStrokeColor == null ? null : new Color(jsStrokeColor);
             }
             set
             {
-                _jsObject["strokeColor"] = value;
+                Property("strokeColor", value);
             }
         }
 
@@ -316,12 +314,12 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsStrokeWidth = _jsObject["strokeWidth"];
+                JSValue jsStrokeWidth = Property("strokeWidth");
                 return (double)jsStrokeWidth;
             }
             set
             {
-                _jsObject["strokeWidth"] = value;
+                Property("strokeWidth", value);
             }
         }
 
@@ -332,12 +330,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsFillColor = _jsObject["fillColor"];
+                JSObject jsFillColor = Property("fillColor");
                 return jsFillColor == null ? null : new Color(jsFillColor);
             }
             set
             {
-                _jsObject["fillColor"] = value;
+                Property("fillColor", value);
             }
         }
 
@@ -350,12 +348,12 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsSelectedColor = _jsObject["selectedColor"];
+                JSObject jsSelectedColor = Property("selectedColor");
                 return jsSelectedColor == null ? null : new Color(jsSelectedColor);
             }
             set
             {
-                _jsObject["selectedColor"] = value;
+                Property("selectedColor", value);
             }
         }
 
