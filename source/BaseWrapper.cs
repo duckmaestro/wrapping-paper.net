@@ -18,6 +18,7 @@ namespace PaperJS
     public class BaseWrapper
     {
         protected JSObject _jsObject;
+        
         private static IWebView _webView;
         private static readonly string WrappingPaperObjectNameJS = "wrappingpaper";
 
@@ -41,60 +42,70 @@ namespace PaperJS
 
         protected void Property(string name, JSValue value)
         {
-            JSObject target = this;
-            JSObject jsClassFactory = _webView.ExecuteJavascriptWithResult(WrappingPaperObjectNameJS);
-            JSValue message = jsClassFactory.Invoke("property", target, name, value);
+            _jsObject[name] = value;
+            return;
 
-            if (message.IsBoolean)
-            {
-                bool success = message;
-                if (success)
-                {
-                    return;
-                }
-                else
-                {
-                    throw new Exception("Unknown error creating object.");
-                }
-            }
-            else if (message.IsString)
-            {
-                string error = message;
-                throw new Exception(error);
-            }
-            else
-            {
-                throw new Exception("Unknown error creating object.");
-            }
+
+            // Uncomment this for detailed exceptions.
+
+            //JSObject target = this;
+            //JSObject jsClassFactory = _webView.ExecuteJavascriptWithResult(WrappingPaperObjectNameJS);
+            //JSValue message = jsClassFactory.Invoke("property", target, name, value);
+
+            //if (message.IsBoolean)
+            //{
+            //    bool success = message;
+            //    if (success)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Unknown error creating object.");
+            //    }
+            //}
+            //else if (message.IsString)
+            //{
+            //    string error = message;
+            //    throw new Exception(error);
+            //}
+            //else
+            //{
+            //    throw new Exception("Unknown error creating object.");
+            //}
         }
 
         protected JSValue Property(string name)
         {
-            JSObject target = this;
-            JSObject jsClassFactory = _webView.ExecuteJavascriptWithResult(WrappingPaperObjectNameJS);
-            JSValue message = jsClassFactory.Invoke("property", target, name);
+            return _jsObject[name];
 
-            if (message.IsBoolean)
-            {
-                bool success = message;
-                if (success)
-                {
-                    return jsClassFactory["outbox"];
-                }
-                else
-                {
-                    throw new Exception("Unknown error creating object.");
-                }
-            }
-            else if (message.IsString)
-            {
-                string error = message;
-                throw new Exception(error);
-            }
-            else
-            {
-                throw new Exception("Unknown error creating object.");
-            }
+            // Uncomment this for detailed exceptions.
+
+            //JSObject target = this;
+            //JSObject jsClassFactory = _webView.ExecuteJavascriptWithResult(WrappingPaperObjectNameJS);
+            //JSValue message = jsClassFactory.Invoke("property", target, name);
+
+            //if (message.IsBoolean)
+            //{
+            //    bool success = message;
+            //    if (success)
+            //    {
+            //        return jsClassFactory["outbox"];
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Unknown error creating object.");
+            //    }
+            //}
+            //else if (message.IsString)
+            //{
+            //    string error = message;
+            //    throw new Exception(error);
+            //}
+            //else
+            //{
+            //    throw new Exception("Unknown error creating object.");
+            //}
         }
 
         protected T Property<T>(string name) where T : BaseWrapper

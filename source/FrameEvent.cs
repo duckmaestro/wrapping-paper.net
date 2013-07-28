@@ -21,12 +21,12 @@ namespace PaperJS
         /// <summary>
         /// the number of times the frame event was fired.
         /// </summary>
-        public double Count
+        public int Count
         {
             get
             {
                 JSValue jsCount = _jsObject["count"];
-                return (double)jsCount;
+                return (int)jsCount;
             }
         }
 
