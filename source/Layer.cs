@@ -45,7 +45,7 @@ namespace PaperJS
         /// </summary>
         public void Active()
         {
-            _jsObject.Invoke("activate");
+            Method("activate");
         }
     }
 }

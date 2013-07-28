@@ -40,8 +40,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsId = Property("id");
-                return (int)jsId;
+                return (int)Property("id");
             }
         }
 
@@ -82,8 +81,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsStyle = Property("style");
-                return jsStyle == null ? null : new Style(jsStyle);
+                return Property<Style>("style");
             }
             set
             {
@@ -99,8 +97,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsVisible = Property("visible");
-                return (bool)jsVisible;
+                return (bool)Property("visible");
             }
             set
             {
@@ -123,8 +120,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsSelected = Property("selected");
-                return (bool)jsSelected;
+                return (bool)Property("selected");
             }
             set
             {
@@ -141,8 +137,7 @@ namespace PaperJS
         {
             get
             {
-                JSValue jsClipMask = Property("clipMask");
-                return (bool)jsClipMask;
+                return (bool)Property("clipMask");
             }
             set
             {
@@ -175,8 +170,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsPosition = Property("position");
-                return jsPosition == null ? null : new Point(jsPosition);
+                return Property<Point>("position");
             }
             set
             {
@@ -192,8 +186,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsMatrix = Property("matrix");
-                return jsMatrix == null ? null : new Matrix(jsMatrix);
+                return Property<Matrix>("matrix");
             }
             set
             {
@@ -209,8 +202,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsBounds = Property("bounds");
-                return jsBounds == null ? null : new Rectangle(jsBounds);
+                return Property<Rectangle>("bounds");
             }
             set
             {
@@ -226,8 +218,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsProject = Property("project");
-                return jsProject == null ? null : new Project(jsProject);
+                return Property<Project>("project");
             }
         }
 
@@ -239,8 +230,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsLayer = Property("layer");
-                return jsLayer == null ? null : new Layer(jsLayer);
+                return Property<Layer>("layer");
             }
         }
 
@@ -251,8 +241,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsParent = Property("parent");
-                return jsParent == null ? null : new Item(jsParent);
+                return Property<Item>("parent");
             }
             set
             {
@@ -298,8 +287,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsStrokeColor = Property("strokeColor");
-                return jsStrokeColor == null ? null : new Color(jsStrokeColor);
+                return Property<Color>("strokeColor");
             }
             set
             {
@@ -348,8 +336,7 @@ namespace PaperJS
         {
             get
             {
-                JSObject jsSelectedColor = Property("selectedColor");
-                return jsSelectedColor == null ? null : new Color(jsSelectedColor);
+                return Property<Color>("selectedColor");
             }
             set
             {
@@ -373,7 +360,7 @@ namespace PaperJS
             {
                 if (value != null)
                 {
-                    _jsObject.Bind("OnFrame", false, delegate(object sender, JavascriptMethodEventArgs args)
+                    _jsObject.Bind("onFrame", false, delegate(object sender, JavascriptMethodEventArgs args)
                     {
                         JSObject jsArg0 = args.Arguments[0];
                         FrameEvent frameEvent = new FrameEvent(jsArg0);
@@ -382,7 +369,7 @@ namespace PaperJS
                 }
                 else
                 {
-                    _jsObject.RemoveProperty("OnFrame");
+                    _jsObject.RemoveProperty("onFrame");
                 }
             }
         }
@@ -496,7 +483,7 @@ namespace PaperJS
         /// </summary>
         public bool IsEmpty()
         {
-            return _jsObject.Invoke("isEmpty");
+            return Method("isEmpty");
         }
 
         /// <summary>
@@ -504,7 +491,7 @@ namespace PaperJS
         /// </summary>
         public bool Contains(Point point)
         {
-            return _jsObject.Invoke("contains", point);
+            return Method("contains", point);
         }
 
         /// <summary>
@@ -514,7 +501,7 @@ namespace PaperJS
         /// </summary>
         public void AddChild(Item item)
         {
-            _jsObject.Invoke("addChild", item);
+            Method("addChild", item);
         }
 
         /// <summary>
@@ -522,7 +509,17 @@ namespace PaperJS
         /// </summary>
         public bool IsChild(Item item)
         {
-            return _jsObject.Invoke("isChild", item);
+            return Method("isChild", item);
+        }
+
+        /// <summary>
+        /// Removes the item from the project. If the item has children, 
+        /// they are also removed.
+        /// </summary>
+        /// <returns></returns>
+        public bool Remove()
+        {
+            return Method("remove");
         }
 
         /// <summary>
@@ -530,7 +527,7 @@ namespace PaperJS
         /// </summary>
         public void Translate(Point delta)
         {
-            _jsObject.Invoke("translate", delta);
+            Method("translate", delta);
         }
     }
 }

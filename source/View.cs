@@ -133,7 +133,7 @@ namespace PaperJS
         /// </summary>
         public void Draw()
         {
-            _jsObject.Invoke("draw");
+            Method("draw");
         }
     }
 }

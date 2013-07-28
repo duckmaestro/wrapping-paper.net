@@ -101,7 +101,7 @@ namespace PaperJS
         /// </summary>
         public void Setup(JSObject canvas)
         {
-            _jsObject.Invoke("setup", canvas);
+            Method("setup", canvas);
         }
     }
 }

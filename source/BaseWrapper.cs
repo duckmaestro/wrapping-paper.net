@@ -97,6 +97,25 @@ namespace PaperJS
             }
         }
 
+        protected T Property<T>(string name) where T : BaseWrapper
+        {
+            JSObject jsObj = Property(name);
+            if (jsObj == null)
+            {
+                return null;
+            }
+            else
+            {
+                T obj = (T)Activator.CreateInstance(typeof(T), jsObj);
+                return obj;
+            }
+        }
+
+        protected JSValue Method(string name, params JSValue[] args)
+        {
+            return _jsObject.Invoke(name, args);
+        }
+
         public static JSObject CreateObjectByTypeName(string typeName, object[] arguments)
         {
             if (_webView == null)
@@ -201,6 +220,14 @@ namespace PaperJS
                 else if (type == typeof(double))
                 {
                     converted.Add(new JSValue((double)a));
+                }
+                else if (type == typeof(int))
+                {
+                    converted.Add(new JSValue((int)a));
+                }
+                else if (type == typeof(bool))
+                {
+                    converted.Add(new JSValue((bool)a));
                 }
                 else if (type == typeof(string))
                 {
